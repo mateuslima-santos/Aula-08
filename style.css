@@ -4,79 +4,84 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#secao {
+    position: relative;
+    top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #cabecalho {
     text-align: center;
-    justify-content: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: firebrick;
     color: white;
     padding: 20px;
 }
 
-#titulo {
-    font-size: 70;
-}
+#titulo { font-size: 70px; }
 
-#inputs {
+#inputs, #botoes {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
-#botoes {
-    display: flex;
-    justify-content: center;
-}
-
-.botao {
-    margin: 50px 20px;
+.botao, .botao-limpar {
+    margin: 10px;
     width: 200px;
     height: 60px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 25;
+    font-size: 20px;
     background-color: firebrick;
     color: white;
     border-radius: 10px;
-    border-color: white;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-#input_1 {
-    margin: 50px 20px;
-    border-color: white;
+.botao:hover { background-color: darkred; }
+
+.botao-limpar { background-color: #333; }
+
+#input_1, #input_2 {
+    margin: 20px;
+    border: 2px solid black;
     border-radius: 10px;
-    font-size: 25;
-    width: 400px;
+    font-size: 25px;
+    width: 200px;
     height: 60px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
 }
 
 #sinal {
-    margin: 50px 20px;
-    font-size: 30;
-    position: relative;
-    top: 10px;
+    font-size: 40px;
     color: white;
+    text-shadow: 2px 2px 4px black;
 }
 
-#input_2 {
-    margin: 50px 20px;
-    border-color: white;
-    border-radius: 10px;
-    font-size: 25;
-    width: 400px;
-    height: 60px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+#resultado {
+    margin-left: 20px;
+    font-size: 30px;
+    color: yellow;
+    background: rgba(0,0,0,0.5);
+    padding: 10px;
+    border-radius: 5px;
 }
 
-#igual {
-    margin: 50px 20px;
-    width: 60px;
-    height: 60px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 30;
-    background-color: firebrick;
-    color: white;
+#historico-container {
+    margin-top: 30px;
+    background: white;
+    padding: 20px;
     border-radius: 10px;
-    border-color: white;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
+
+#lista-historico { list-style: none; padding: 0; }
+#lista-historico li { border-bottom: 1px dashed #ccc; padding: 5px 0; }

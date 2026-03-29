@@ -1,4 +1,5 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,33 +9,36 @@
 <body>
 
     <header id="cabecalho">
-
         <div>
             <span id="titulo"><b>Cálculo G3N!41</b></span>
             <br>
             <b>Faça os cálculos mais rápidos do planeta.</b>
         </div>
-
     </header>
 
-    <section>
-
+    <section id="secao">
         <div id="inputs">
-            <input id="input_1">
+            <input type="text" id="input_1" placeholder="0">
             <b id="sinal">+</b>
-            <input id="input_2">
-            <button id="igual"><b>=</b></button>
-            <b id="resulatado"></b>
+            <input type="text" id="input_2" placeholder="0">
+            <button id="igual">=</button>
+            <b id="resultado"></b>
         </div>
 
         <div id="botoes">
-            <button id="somar" class="botao">Soma</button>
-            <button id="subtrair" class="botao">Subtração</button>
-            <button id="multiplicar" class="botao">Multiplicação</button>
-            <button id="dividir" class="botao">Divisão</button>
+            <button id="somar" class="botao" data-op="+">Soma</button>
+            <button id="subtrair" class="botao" data-op="-">Subtração</button>
+            <button id="multiplicar" class="botao" data-op="*">Multiplicação</button>
+            <button id="dividir" class="botao" data-op="/">Divisão</button>
+            <button id="limpar" class="botao-limpar">Limpar Tudo</button>
         </div>
 
+        <div id="historico-container">
+            <h3>Histórico de Operações</h3>
+            <ul id="lista-historico"></ul>
+        </div>
     </section>
-    
+
+    <script src="script.js"></script>
 </body>
 </html>
