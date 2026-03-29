@@ -1,88 +1,136 @@
-// Seleção de elementos
-const input1 = document.getElementById('input_1');
-const input2 = document.getElementById('input_2');
-const sinalDisplay = document.getElementById('sinal');
-const resultadoDisplay = document.getElementById('resultado');
-const btnIgual = document.getElementById('igual');
-const btnLimpar = document.getElementById('limpar');
-const listaHistorico = document.getElementById('lista-historico');
+﻿const input1 = document.getElementById("input_1");
+const input2 = document.getElementById("input_2");
+const sinal = document.getElementById("sinal");
+const resultado = document.getElementById("resultado");
+const mensagem = document.getElementById("mensagem");
+const historico = document.getElementById("historico");
+const botaoIgual = document.getElementById("igual");
+const botaoLimpar = document.getElementById("limpar");
+const botoesOperacao = document.querySelectorAll("[data-operacao]");
 
-let operacaoAtual = '+';
+let operacaoAtual = "+";
+let historicoVazio = true;
 
-// 1. Funções Matemáticas
-const operacoes = {
-    '+': (a, b) => a + b,
-    '-': (a, b) => a - b,
-    '*': (a, b) => a * b,
-    '/': (a, b) => (b === 0 ? "Erro: Divisão por 0" : a / b)
-};
+function somar(numero1, numero2) {
+    return numero1 + numero2;
+}
 
-// 2. Função de Cálculo Principal
+function subtrair(numero1, numero2) {
+    return numero1 - numero2;
+}
+
+function multiplicar(numero1, numero2) {
+    return numero1 * numero2;
+}
+
+function dividir(numero1, numero2) {
+    return numero1 / numero2;
+}
+
+function mostrarMensagem(texto, tipo) {
+    mensagem.textContent = texto;
+    mensagem.className = tipo;
+}
+
+function definirOperacao(operacao) {
+    operacaoAtual = operacao;
+    sinal.textContent = operacao;
+
+    botoesOperacao.forEach((botao) => {
+        botao.classList.toggle("ativo", botao.dataset.operacao === operacao);
+    });
+}
+
+function adicionarAoHistorico(conta, valorFinal) {
+    if (historicoVazio) {
+        historico.innerHTML = "";
+        historicoVazio = false;
+    }
+
+    const item = document.createElement("li");
+    item.textContent = `${conta} = ${valorFinal}`;
+    historico.prepend(item);
+}
+
+function validarCampos(valor1, valor2) {
+    if (valor1 === "" || valor2 === "") {
+        mostrarMensagem("Preencha os dois campos antes de calcular.", "erro");
+        return false;
+    }
+
+    if (isNaN(valor1) || isNaN(valor2)) {
+        mostrarMensagem("Digite apenas números válidos nos campos.", "erro");
+        return false;
+    }
+
+    if (operacaoAtual === "/" && Number(valor2) === 0) {
+        mostrarMensagem("Não é permitido dividir por zero.", "erro");
+        return false;
+    }
+
+    return true;
+}
+
 function calcular() {
-    const val1 = input1.value.replace(',', '.');
-    const val2 = input2.value.replace(',', '.');
+    const valor1 = input1.value.trim().replace(",", ".");
+    const valor2 = input2.value.trim().replace(",", ".");
 
-    // Validações
-    if (val1 === "" || val2 === "") {
-        alert("Por favor, preencha ambos os campos.");
+    if (!validarCampos(valor1, valor2)) {
+        resultado.textContent = "?";
         return;
     }
 
-    const num1 = Number(val1);
-    const num2 = Number(val2);
+    const numero1 = Number(valor1);
+    const numero2 = Number(valor2);
+    let valorFinal;
 
-    if (isNaN(num1) || isNaN(num2)) {
-        alert("Digite apenas números válidos.");
+    if (operacaoAtual === "+") {
+        valorFinal = somar(numero1, numero2);
+    } else if (operacaoAtual === "-") {
+        valorFinal = subtrair(numero1, numero2);
+    } else if (operacaoAtual === "*") {
+        valorFinal = multiplicar(numero1, numero2);
+    } else if (operacaoAtual === "/") {
+        valorFinal = dividir(numero1, numero2);
+    }
+
+    resultado.textContent = valorFinal;
+    mostrarMensagem("Cálculo realizado com sucesso.", "sucesso");
+    adicionarAoHistorico(`${numero1} ${operacaoAtual} ${numero2}`, valorFinal);
+}
+
+function limparCampos() {
+    input1.value = "";
+    input2.value = "";
+    resultado.textContent = "?";
+    mostrarMensagem("Campos limpos. Escolha uma operação e digite novos valores.", "sucesso");
+    input1.focus();
+}
+
+botoesOperacao.forEach((botao) => {
+    botao.addEventListener("click", () => {
+        definirOperacao(botao.dataset.operacao);
+        mostrarMensagem(`Operação selecionada: ${botao.textContent}.`, "sucesso");
+    });
+});
+
+botaoIgual.addEventListener("click", calcular);
+botaoLimpar.addEventListener("click", limparCampos);
+
+document.addEventListener("keydown", (evento) => {
+    if (["+", "-", "*", "/"].includes(evento.key)) {
+        definirOperacao(evento.key);
+        mostrarMensagem(`Operação alterada para ${evento.key}.`, "sucesso");
         return;
     }
 
-    // Execução
-    const resultado = operacoes[operacaoAtual](num1, num2);
-    
-    // Exibição
-    resultadoDisplay.textContent = resultado;
-    
-    if (typeof resultado === 'number') {
-        adicionarAoHistorico(`${num1} ${operacaoAtual} ${num2} = ${resultado}`);
-    }
-}
-
-// 3. Atualizar Operação
-function setOperacao(op) {
-    operacaoAtual = op;
-    sinalDisplay.textContent = op;
-}
-
-// 4. Histórico
-function adicionarAoHistorico(texto) {
-    const li = document.createElement('li');
-    li.textContent = texto;
-    listaHistorico.prepend(li); // Adiciona no topo
-}
-
-// 5. Event Listeners (Boas práticas)
-document.querySelectorAll('.botao').forEach(btn => {
-    btn.addEventListener('click', () => setOperacao(btn.getAttribute('data-op')));
-});
-
-btnIgual.addEventListener('click', calcular);
-
-btnLimpar.addEventListener('click', () => {
-    input1.value = '';
-    input2.value = '';
-    resultadoDisplay.textContent = '';
-    setOperacao('+');
-});
-
-// 6. Suporte para Teclado
-document.addEventListener('keydown', (event) => {
-    if (['+', '-', '*', '/'].includes(event.key)) {
-        setOperacao(event.key);
-    }
-    if (event.key === 'Enter') {
+    if (evento.key === "Enter") {
         calcular();
     }
-    if (event.key === 'Escape') {
-        btnLimpar.click();
+
+    if (evento.key === "Escape") {
+        limparCampos();
     }
 });
+
+definirOperacao("+");

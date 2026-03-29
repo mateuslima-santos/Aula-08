@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,6 @@
     <title>Cálculo Genial</title>
 </head>
 <body>
-
     <header id="cabecalho">
         <div>
             <span id="titulo"><b>Cálculo G3N!41</b></span>
@@ -16,29 +15,35 @@
         </div>
     </header>
 
-    <section id="secao">
-        <div id="inputs">
-            <input type="text" id="input_1" placeholder="0">
-            <b id="sinal">+</b>
-            <input type="text" id="input_2" placeholder="0">
-            <button id="igual">=</button>
-            <b id="resultado"></b>
-        </div>
+    <main id="secao">
+        <section id="calculadora">
+            <div id="inputs">
+                <input id="input_1" type="text" placeholder="Primeiro valor" aria-label="Primeiro valor">
+                <b id="sinal">+</b>
+                <input id="input_2" type="text" placeholder="Segundo valor" aria-label="Segundo valor">
+                <button id="igual" type="button" aria-label="Calcular"><b>=</b></button>
+                <b id="resultado">?</b>
+            </div>
 
-        <div id="botoes">
-            <button id="somar" class="botao" data-op="+">Soma</button>
-            <button id="subtrair" class="botao" data-op="-">Subtração</button>
-            <button id="multiplicar" class="botao" data-op="*">Multiplicação</button>
-            <button id="dividir" class="botao" data-op="/">Divisão</button>
-            <button id="limpar" class="botao-limpar">Limpar Tudo</button>
-        </div>
+            <p id="mensagem" aria-live="polite"></p>
 
-        <div id="historico-container">
-            <h3>Histórico de Operações</h3>
-            <ul id="lista-historico"></ul>
-        </div>
-    </section>
+            <div id="botoes">
+                <button id="somar" class="botao" type="button" data-operacao="+">Soma</button>
+                <button id="subtrair" class="botao" type="button" data-operacao="-">Subtração</button>
+                <button id="multiplicar" class="botao" type="button" data-operacao="*">Multiplicação</button>
+                <button id="dividir" class="botao" type="button" data-operacao="/">Divisão</button>
+                <button id="limpar" class="botao secundario" type="button">Limpar</button>
+            </div>
+        </section>
 
-    <script src="script.js"></script>
+        <section id="historico_box">
+            <h2>Histórico</h2>
+            <ul id="historico">
+                <li>Nenhuma operação realizada ainda.</li>
+            </ul>
+        </section>
+    </main>
+
+    <script src="scripts/calculadora.js"></script>
 </body>
 </html>
